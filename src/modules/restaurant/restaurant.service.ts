@@ -12,4 +12,8 @@ export class RestaurantService {
   async findAll(): Promise<Restaurant[]> {
     return this.restaurantModel.find().exec();
   }
+
+  async findById(id: string): Promise<Restaurant | null> {
+    return this.restaurantModel.findById(id).exec();
+  }
 }
