@@ -28,7 +28,22 @@ export class AuthenticationService {
     return { token: this.generateToken(user._id as string, user.email) };
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async login(email: string, password: string): Promise<{ token: string }> {
+    const user: UserDocument | null = await this.findByEmail(email);
+
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    return { token: this.generateToken(user._id as string, user.email) };
+  }
+
+  private async findByEmail(email: string): Promise<UserDocument | null> {
     return this.userModel.findOne({ email }).exec();
   }
 
