@@ -43,6 +43,17 @@ export class AuthenticationService {
     return { token: this.generateToken(user._id as string, user.email) };
   }
 
+  async getLoggedUser(userId: string): Promise<UserDocument> {
+    const user = await this.userModel
+      .findById(userId)
+      .select('-password')
+      .exec();
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+    return user;
+  }
+
   private async findByEmail(email: string): Promise<UserDocument | null> {
     return this.userModel.findOne({ email }).exec();
   }
