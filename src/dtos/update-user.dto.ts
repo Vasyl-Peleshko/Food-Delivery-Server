@@ -48,6 +48,6 @@ export class UpdateUserDto {
 
   @IsOptional()
   @ValidateNested()
-  @Type(() => DeliveryAddressDto) // Вказуємо, що це вкладений об'єкт
+  @Type(() => DeliveryAddressDto)
   deliveryAddress?: DeliveryAddressDto;
 }
