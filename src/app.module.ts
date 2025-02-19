@@ -7,7 +7,12 @@ import { AuthenticationModule } from './modules/authentication/authentication.mo
 import { FoodDetailsModule } from './modules/food-details/food-details.module';
 
 @Module({
-  imports: [DatabaseModule, RestaurantModule, AuthenticationModule, FoodDetailsModule],
+  imports: [
+    FoodDetailsModule,
+    DatabaseModule,
+    RestaurantModule,
+    AuthenticationModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
