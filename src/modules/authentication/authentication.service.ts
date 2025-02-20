@@ -1,10 +1,16 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/schemas/user.schema';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterUserDto } from 'src/dtos/register-user.dto';
+import { UpdateUserDto } from 'src/dtos/update-user.dto';
 
 @Injectable()
 export class AuthenticationService {
@@ -52,6 +58,31 @@ export class AuthenticationService {
       throw new UnauthorizedException('User not found');
     }
     return user;
+  }
+
+  async updateUser(userId: string, dto: UpdateUserDto): Promise<UserDocument> {
+    const user = await this.userModel.findById(userId);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (dto.email && dto.email !== user.email) {
+      const existingUser = await this.userModel.findOne({ email: dto.email });
+      if (existingUser) {
+        throw new BadRequestException('Email is already in use');
+      }
+    }
+
+    Object.assign(user, dto);
+    await user.save();
+
+    return user.toObject({
+      versionKey: false,
+      transform: (_, ret) => {
+        delete ret.password;
+      },
+    });
   }
 
   private async findByEmail(email: string): Promise<UserDocument | null> {
