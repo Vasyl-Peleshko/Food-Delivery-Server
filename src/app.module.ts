@@ -7,6 +7,7 @@ import { AuthenticationModule } from './modules/authentication/authentication.mo
 import { FoodDetailsModule } from './modules/food-details/food-details.module';
 import { NovaPoshtaModule } from './modules/nova-poshta/nova-poshta.module';
 import { ConfigModule } from '@nestjs/config';
+import { PaymentModule } from './modules/payment/payment.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ConfigModule } from '@nestjs/config';
     RestaurantModule,
     AuthenticationModule,
     NovaPoshtaModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
