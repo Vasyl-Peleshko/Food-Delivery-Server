@@ -54,6 +54,15 @@ class ProductDto {
   addons?: AddonDto[];
 }
 
+// Delivery address DTO
+class DeliveryAddressDto {
+  @IsString()
+  city: string;
+
+  @IsString()
+  novaPostDepartment: string;
+}
+
 export class CreateOrderDto {
   @IsArray()
   @ValidateNested({ each: true })
@@ -66,4 +75,12 @@ export class CreateOrderDto {
   @IsOptional()
   @IsString()
   status?: string;
+
+  // New fields
+  @ValidateNested()
+  @Type(() => DeliveryAddressDto)
+  deliveryAddress: DeliveryAddressDto;
+
+  @IsString()
+  restaurantAddress: string;
 }
