@@ -8,6 +8,7 @@ import { FoodDetailsModule } from './modules/food-details/food-details.module';
 import { NovaPoshtaModule } from './modules/nova-poshta/nova-poshta.module';
 import { ConfigModule } from '@nestjs/config';
 import { PaymentModule } from './modules/payment/payment.module';
+import { OrderModule } from './modules/order/order.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { PaymentModule } from './modules/payment/payment.module';
     AuthenticationModule,
     NovaPoshtaModule,
     PaymentModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
