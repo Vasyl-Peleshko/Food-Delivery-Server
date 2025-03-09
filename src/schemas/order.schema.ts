@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 class Addon {
   @Prop({ required: true })
@@ -46,6 +46,8 @@ class Product {
 
 @Schema({ timestamps: true })
 export class Order extends Document {
+  _id: Types.ObjectId;
+
   @Prop({ required: true })
   userId: string;
 

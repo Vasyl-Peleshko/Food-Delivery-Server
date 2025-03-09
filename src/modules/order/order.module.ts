@@ -6,6 +6,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Order, OrderSchema } from 'src/schemas/order.schema';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { DeliverySimulator } from './delivery-simulator';
+import { MapsService } from './maps.service';
 
 @Module({
   imports: [
@@ -20,6 +22,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
   ],
   controllers: [OrderController],
-  providers: [OrderService],
+  providers: [OrderService, MapsService, DeliverySimulator],
 })
 export class OrderModule {}
